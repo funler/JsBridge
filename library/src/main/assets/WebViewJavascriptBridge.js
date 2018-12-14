@@ -18,19 +18,16 @@
     var responseCallbacks = {};
     var uniqueId = 1;
 
-    // 创建消息index队列iframe
     function _createQueueReadyIframe(doc) {
         messagingIframe = doc.createElement('iframe');
         messagingIframe.style.display = 'none';
         doc.documentElement.appendChild(messagingIframe);
     }
-    //创建消息体队列iframe
     function _createQueueReadyIframe4biz(doc) {
         bizMessagingIframe = doc.createElement('iframe');
         bizMessagingIframe.style.display = 'none';
         doc.documentElement.appendChild(bizMessagingIframe);
     }
-    //set default messageHandler  初始化默认的消息线程
     function init(messageHandler) {
         if (WebViewJavascriptBridge._messageHandler) {
             throw new Error('WebViewJavascriptBridge.init called twice');
@@ -43,18 +40,15 @@
         }
     }
 
-    // 发送
     function send(data, responseCallback) {
         _doSend({
             data: data
         }, responseCallback);
     }
 
-    // 注册线程 往数组里面添加值
     function registerHandler(handlerName, handler) {
         messageHandlers[handlerName] = handler;
     }
-    // 调用线程
     function callHandler(handlerName, data, responseCallback) {
         _doSend({
             handlerName: handlerName,
@@ -62,7 +56,6 @@
         }, responseCallback);
     }
 
-    //sendMessage add message, 触发native处理 sendMessage
     function _doSend(message, responseCallback) {
         if (responseCallback) {
             var callbackId = 'cb_' + (uniqueId++) + '_' + new Date().getTime();
@@ -74,7 +67,6 @@
         messagingIframe.src = CUSTOM_PROTOCOL_SCHEME + '://' + QUEUE_HAS_MESSAGE;
     }
 
-    // 提供给native调用,该函数作用:获取sendMessageQueue返回给native,由于android不能直接获取返回的内容,所以使用url shouldOverrideUrlLoading 的方式返回内容
     function _fetchQueue() {
         var messageQueueString = JSON.stringify(sendMessageQueue);
         sendMessageQueue = [];
@@ -84,7 +76,6 @@
         }
     }
 
-    //提供给native使用,
     function _dispatchMessageFromNative(messageJSON) {
         setTimeout(function() {
             var message = JSON.parse(messageJSON);
@@ -98,7 +89,6 @@
                 responseCallback(message.responseData);
                 delete responseCallbacks[message.responseId];
             } else {
-                //直接发送
                 if (message.callbackId) {
                     var callbackResponseId = message.callbackId;
                     responseCallback = function(responseData) {
@@ -113,7 +103,6 @@
                 if (message.handlerName) {
                     handler = messageHandlers[message.handlerName];
                 }
-                //查找指定handler
                 try {
                     handler(message.data, responseCallback);
                 } catch (exception) {
@@ -125,7 +114,6 @@
         });
     }
 
-    //提供给native调用,receiveMessageQueue 在会在页面加载完后赋值为null,所以
     function _handleMessageFromNative(messageJSON) {
         console.log(messageJSON);
         if (receiveMessageQueue) {

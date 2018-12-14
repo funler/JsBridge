@@ -10,5 +10,4 @@ public class DefaultHandler implements BridgeHandler{
 			function.onCallBack("DefaultHandler response data");
 		}
 	}
-
 }
