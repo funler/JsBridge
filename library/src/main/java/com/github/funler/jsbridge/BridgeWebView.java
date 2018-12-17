@@ -7,6 +7,7 @@ import android.os.Looper;
 import android.os.SystemClock;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 
 import org.json.JSONObject;
@@ -65,12 +66,29 @@ public class BridgeWebView extends WebView implements WebViewJavascriptBridge {
 
     private void init(Context context) {
         this.context = context;
-        this.setVerticalScrollBarEnabled(false);
-        this.setHorizontalScrollBarEnabled(false);
-        this.getSettings().setJavaScriptEnabled(true);
+
+        this.setVerticalScrollBarEnabled(true);
+        this.setHorizontalScrollBarEnabled(true);
+
+        WebSettings settings = this.getSettings();
+        settings.setJavaScriptEnabled(true);
+        settings.setAllowContentAccess(true);
+        settings.setAllowFileAccess(true);
+        settings.setAllowFileAccessFromFileURLs(true);
+        settings.setAllowUniversalAccessFromFileURLs(true);
+        settings.setAppCacheEnabled(false);
+        settings.setLoadsImagesAutomatically(true);
+        settings.setUseWideViewPort(true);
+        settings.setLoadWithOverviewMode(true);
+        settings.setSupportZoom(false);
+        settings.setBuiltInZoomControls(false); // lock pinch to zooom
+        settings.setDisplayZoomControls(false);
+        settings.setCacheMode(WebSettings.LOAD_DEFAULT); // This was added when clear cache was removed
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             WebView.setWebContentsDebuggingEnabled(true);
         }
+
         this.setWebViewClient(generateBridgeWebViewClient());
 
         for (JS2JavaHandlers handler : JS2JavaHandlers.values()) {
