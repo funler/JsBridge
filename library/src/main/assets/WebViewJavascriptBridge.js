@@ -132,6 +132,28 @@
         _handleMessageFromNative: _handleMessageFromNative
     };
 
+    var NativeStorage = window.NativeStorage = {
+        getItem: function(key, successCallback, errorCallback) {
+            callHandler('getNativeStorageItem', [key], function(response) {
+                if (response === 'false') {
+                    errorCallback();
+                } else {
+                    successCallback(response);
+                }
+            });
+        },
+
+        setItem: function(key, value, successCallback, errorCallback) {
+            callHandler('setNativeStorageItem', [key, value], function() {
+                if (response === 'false') {
+                    errorCallback();
+                } else {
+                    successCallback(response);
+                }
+            });
+        }
+    };
+
     var doc = document;
     _createQueueReadyIframe(doc);
     _createQueueReadyIframe4biz(doc);

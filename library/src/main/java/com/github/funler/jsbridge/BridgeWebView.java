@@ -28,6 +28,7 @@ public class BridgeWebView extends WebView implements WebViewJavascriptBridge {
     BridgeHandler defaultHandler = new DefaultHandler();
 
     private List<Message> startupMessage = new ArrayList<Message>();
+    private Context context;
 
     public List<Message> getStartupMessage() {
         return startupMessage;
@@ -41,17 +42,17 @@ public class BridgeWebView extends WebView implements WebViewJavascriptBridge {
 
     public BridgeWebView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init();
+        init(context);
     }
 
     public BridgeWebView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        init();
+        init(context);
     }
 
     public BridgeWebView(Context context) {
         super(context);
-        init();
+        init(context);
     }
 
     /**
@@ -62,7 +63,8 @@ public class BridgeWebView extends WebView implements WebViewJavascriptBridge {
         this.defaultHandler = handler;
     }
 
-    private void init() {
+    private void init(Context context) {
+        this.context = context;
         this.setVerticalScrollBarEnabled(false);
         this.setHorizontalScrollBarEnabled(false);
         this.getSettings().setJavaScriptEnabled(true);
@@ -70,6 +72,10 @@ public class BridgeWebView extends WebView implements WebViewJavascriptBridge {
             WebView.setWebContentsDebuggingEnabled(true);
         }
         this.setWebViewClient(generateBridgeWebViewClient());
+
+        for (JS2JavaHandlers handler : JS2JavaHandlers.values()) {
+            messageHandlers.put(handler.name(), handler.handler());
+        }
     }
 
     protected BridgeWebViewClient generateBridgeWebViewClient() {
@@ -203,7 +209,7 @@ public class BridgeWebView extends WebView implements WebViewJavascriptBridge {
                             handler = defaultHandler;
                         }
                         if (handler != null) {
-                            handler.handler(m.getData(), responseFunction);
+                            handler.handler(this.context, m.getData(), responseFunction);
                         }
                     }
                 }
