@@ -1,4 +1,4 @@
-package com.github.lzyzsd.jsbridge;
+package com.github.funler.jsbridge;
 
 import android.content.Context;
 import android.webkit.WebView;

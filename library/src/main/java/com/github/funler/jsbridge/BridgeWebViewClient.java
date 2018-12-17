@@ -1,4 +1,4 @@
-package com.github.lzyzsd.jsbridge;
+package com.github.funler.jsbridge;
 
 import android.graphics.Bitmap;
 import android.os.Build;

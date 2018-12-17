@@ -1,4 +1,4 @@
-package com.github.lzyzsd.jsbridge;
+package com.github.funler.jsbridge;
 
 public interface WebViewJavascriptBridge {
 	public void send(String data);
