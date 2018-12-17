@@ -1,13 +1,13 @@
 package com.github.funler.jsbridge;
 
+import android.content.Context;
+
 public class DefaultHandler implements BridgeHandler {
 
-	String TAG = "DefaultHandler";
-	
 	@Override
-	public void handler(String data, CallBackFunction function) {
+	public void handler(Context context, String data, CallBackFunction function) {
 		if(function != null){
-			function.onCallBack(TAG + " response data");
+			function.onCallBack("DefaultHandler response data");
 		}
 	}
 }
