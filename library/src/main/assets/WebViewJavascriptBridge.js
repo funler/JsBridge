@@ -133,23 +133,27 @@
     };
 
     var NativeStorage = window.NativeStorage = {
-        getItem: function(key, successCallback, errorCallback) {
-            callHandler('getNativeStorageItem', [key], function(response) {
-                if (response === 'false') {
-                    errorCallback();
-                } else {
-                    successCallback(response);
-                }
+        getItem: function(key) {
+            return new Promise(function(resolve, reject) {
+                callHandler('getNativeStorageItem', [key], function(response) {
+                    if (response === 'false') {
+                        reject();
+                    } else {
+                        resolve(response);
+                    }
+                });
             });
         },
 
-        setItem: function(key, value, successCallback, errorCallback) {
-            callHandler('setNativeStorageItem', [key, value], function() {
-                if (response === 'false') {
-                    errorCallback();
-                } else {
-                    successCallback(response);
-                }
+        setItem: function(key, value) {
+            return new Promise(function(resolve, reject) {
+                callHandler('setNativeStorageItem', [key, value], function(response) {
+                    if (response === 'false') {
+                        reject();
+                    } else {
+                        resolve(response);
+                    }
+                });
             });
         }
     };
