@@ -30,7 +30,11 @@ public enum JS2JavaHandlers {
         try {
             JSONArray dataArray = new JSONArray(data);
             SharedPreferences prefs = context.getSharedPreferences(JS2JavaHandlers.STORAGE_KEY, Context.MODE_PRIVATE);
-            function.onCallBack(prefs.getString(dataArray.getString(0), null));
+
+            String result = prefs.getString(dataArray.getString(0), null);
+            Log.d(getTag(), "getNativeStorageItem, result " + result);
+
+            function.onCallBack(result);
         } catch (JSONException e) {
             e.printStackTrace();
             function.onCallBack("false");

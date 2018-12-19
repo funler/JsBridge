@@ -7,6 +7,7 @@ import android.os.Looper;
 import android.os.SystemClock;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
@@ -209,6 +210,7 @@ public class BridgeWebView extends WebView implements WebViewJavascriptBridge {
                         if (!TextUtils.isEmpty(callbackId)) {
 
                             responseFunction = (data1) -> {
+                                Log.d(TAG, "Prepare message for queue with data: " + data1);
                                 Message responseMsg = new Message();
                                 responseMsg.setResponseId(callbackId);
                                 responseMsg.setResponseData(data1);

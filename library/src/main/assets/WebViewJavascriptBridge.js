@@ -77,6 +77,7 @@
     }
 
     function _dispatchMessageFromNative(messageJSON) {
+        console.log('dispatch message from native', messageJSON);
         setTimeout(function() {
             var message = JSON.parse(messageJSON);
             var responseCallback;
@@ -115,7 +116,7 @@
     }
 
     function _handleMessageFromNative(messageJSON) {
-        console.log(messageJSON);
+        console.log('handle message from native', messageJSON);
         if (receiveMessageQueue) {
             receiveMessageQueue.push(messageJSON);
         }
