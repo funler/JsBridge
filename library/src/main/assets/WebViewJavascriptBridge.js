@@ -132,8 +132,9 @@
         _handleMessageFromNative: _handleMessageFromNative
     };
 
-    var NativeStorage = window.NativeStorage = {
+    var NativeStorage = {
         getItem: function(key) {
+            console.log('NativeStorage::getNativeStorageItem');
             return new Promise(function(resolve, reject) {
                 callHandler('getNativeStorageItem', [key], function(response) {
                     if (response === 'false') {
@@ -146,6 +147,7 @@
         },
 
         setItem: function(key, value) {
+            console.log('NativeStorage::setNativeStorageItem');
             return new Promise(function(resolve, reject) {
                 callHandler('setNativeStorageItem', [key, typeof value === 'string' ? value : JSON.stringify(value)], function(response) {
                     if (response === 'false') {
@@ -157,6 +159,8 @@
             });
         }
     };
+
+    window.NativeStorage = NativeStorage;
 
     var doc = document;
     _createQueueReadyIframe(doc);
