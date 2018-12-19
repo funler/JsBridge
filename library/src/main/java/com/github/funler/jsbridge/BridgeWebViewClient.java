@@ -72,7 +72,6 @@ public class BridgeWebViewClient extends WebViewClient {
             BridgeUtil.webViewLoadLocalJs(view, script);
         }
 
-
         System.out.println("Load local JS/**/");
 
         if (webView.getStartupMessage() != null) {

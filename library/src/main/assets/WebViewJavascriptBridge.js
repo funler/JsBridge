@@ -137,6 +137,7 @@
             console.log('NativeStorage::getNativeStorageItem');
             return new Promise(function(resolve, reject) {
                 callHandler('getNativeStorageItem', [key], function(response) {
+                    console.log('result', response);
                     if (response === 'false') {
                         reject();
                     } else {
@@ -150,6 +151,7 @@
             console.log('NativeStorage::setNativeStorageItem');
             return new Promise(function(resolve, reject) {
                 callHandler('setNativeStorageItem', [key, typeof value === 'string' ? value : JSON.stringify(value)], function(response) {
+                    console.log('result', response);
                     if (response === 'false') {
                         reject();
                     } else {

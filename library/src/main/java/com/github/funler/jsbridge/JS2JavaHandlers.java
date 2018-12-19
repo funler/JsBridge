@@ -30,7 +30,7 @@ public enum JS2JavaHandlers {
         try {
             JSONArray dataArray = new JSONArray(data);
             SharedPreferences prefs = context.getSharedPreferences(JS2JavaHandlers.STORAGE_KEY, Context.MODE_PRIVATE);
-            function.onCallBack(prefs.getString(dataArray.getString(0), ""));
+            function.onCallBack(prefs.getString(dataArray.getString(0), null));
         } catch (JSONException e) {
             e.printStackTrace();
             function.onCallBack("false");
