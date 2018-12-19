@@ -147,7 +147,7 @@
 
         setItem: function(key, value) {
             return new Promise(function(resolve, reject) {
-                callHandler('setNativeStorageItem', [key, value], function(response) {
+                callHandler('setNativeStorageItem', [key, typeof value === 'string' ? value : JSON.stringify(value)], function(response) {
                     if (response === 'false') {
                         reject();
                     } else {
