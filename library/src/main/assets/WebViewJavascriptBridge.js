@@ -130,7 +130,8 @@
         registerHandler: registerHandler,
         callHandler: callHandler,
         _fetchQueue: _fetchQueue,
-        _handleMessageFromNative: _handleMessageFromNative
+        _handleMessageFromNative: _handleMessageFromNative,
+        _handlers: messageHandlers,
     };
 
     var NativeStorage = {
