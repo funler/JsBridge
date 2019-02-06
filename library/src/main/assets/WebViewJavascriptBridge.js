@@ -77,7 +77,6 @@
     }
 
     function _dispatchMessageFromNative(messageJSON) {
-        console.log('dispatch message from native', messageJSON);
         setTimeout(function() {
             var message = JSON.parse(messageJSON);
             var responseCallback;
@@ -116,7 +115,6 @@
     }
 
     function _handleMessageFromNative(messageJSON) {
-        console.log('handle message from native', messageJSON);
         if (receiveMessageQueue) {
             receiveMessageQueue.push(messageJSON);
         }
@@ -136,10 +134,8 @@
 
     var NativeStorage = {
         getItem: function(key) {
-            console.log('NativeStorage::getNativeStorageItem');
             return new Promise(function(resolve, reject) {
                 callHandler('getNativeStorageItem', [key], function(response) {
-                    console.log('result', response);
                     if (response === 'false') {
                         reject();
                     } else {
@@ -150,10 +146,8 @@
         },
 
         setItem: function(key, value) {
-            console.log('NativeStorage::setNativeStorageItem');
             return new Promise(function(resolve, reject) {
                 callHandler('setNativeStorageItem', [key, typeof value === 'string' ? value : JSON.stringify(value)], function(response) {
-                    console.log('result', response);
                     if (response === 'false') {
                         reject();
                     } else {
