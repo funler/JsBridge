@@ -15,7 +15,15 @@ public enum JS2JavaHandlers {
         try {
             JSONArray dataArray = new JSONArray(data);
             SharedPreferences.Editor prefs = context.getSharedPreferences(JS2JavaHandlers.STORAGE_KEY, Context.MODE_PRIVATE).edit();
-            prefs.putString(dataArray.getString(0), dataArray.getString(1));
+
+            String key = dataArray.getString(0);
+            String value = dataArray.getString(1);
+            if (value == null || data.equals("null")) {
+                prefs.remove(key);
+            } else {
+                prefs.putString(key, value);
+            }
+
             prefs.apply();
             function.onCallBack("true");
         } catch (JSONException e) {
