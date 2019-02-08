@@ -8,6 +8,7 @@ import android.os.SystemClock;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
@@ -84,10 +85,17 @@ public class BridgeWebView extends WebView implements WebViewJavascriptBridge {
         settings.setSupportZoom(false);
         settings.setBuiltInZoomControls(false); // lock pinch to zooom
         settings.setDisplayZoomControls(false);
+        settings.setRenderPriority(WebSettings.RenderPriority.HIGH);
         settings.setCacheMode(WebSettings.LOAD_DEFAULT); // This was added when clear cache was removed
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             WebView.setWebContentsDebuggingEnabled(true);
+        }
+
+        if (Build.VERSION.SDK_INT >= 19) {
+            this.setLayerType(View.LAYER_TYPE_HARDWARE, null);
+        } else {
+            this.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         }
 
         this.setWebViewClient(generateBridgeWebViewClient());
