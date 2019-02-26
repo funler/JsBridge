@@ -24,7 +24,7 @@ public class BridgeWebView extends WebView implements WebViewJavascriptBridge {
 
     private final String TAG = "BridgeWebView";
 
-    public static final String[] LOCAL_SCRIPTS_TO_LOAD = {"Promise.js", "WebViewJavascriptBridge.js"};
+    public static final String[] LOCAL_SCRIPTS_TO_LOAD = {"Object.assign.js", "Promise.js", "WebViewJavascriptBridge.js"};
 
     Map<String, CallBackFunction> responseCallbacks = new HashMap<String, CallBackFunction>();
     Map<String, BridgeHandler> messageHandlers = new HashMap<String, BridgeHandler>();
