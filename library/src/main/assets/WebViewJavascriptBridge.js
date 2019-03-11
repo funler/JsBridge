@@ -132,34 +132,6 @@
         _handlers: messageHandlers,
     };
 
-    var NativeStorage = {
-        getItem: function(key) {
-            return new Promise(function(resolve, reject) {
-                callHandler('getNativeStorageItem', [key], function(response) {
-                    if (response === 'false') {
-                        reject();
-                    } else {
-                        resolve(response);
-                    }
-                });
-            });
-        },
-
-        setItem: function(key, value) {
-            return new Promise(function(resolve, reject) {
-                callHandler('setNativeStorageItem', [key, typeof value === 'string' ? value : JSON.stringify(value)], function(response) {
-                    if (response === 'false') {
-                        reject();
-                    } else {
-                        resolve(response);
-                    }
-                });
-            });
-        }
-    };
-
-    window.NativeStorage = NativeStorage;
-
     var doc = document;
     _createQueueReadyIframe(doc);
     _createQueueReadyIframe4biz(doc);
