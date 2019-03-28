@@ -94,15 +94,8 @@ public class BridgeWebView extends WebView implements WebViewJavascriptBridge {
         settings.setRenderPriority(WebSettings.RenderPriority.HIGH);
         settings.setCacheMode(WebSettings.LOAD_DEFAULT); // This was added when clear cache was removed
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            WebView.setWebContentsDebuggingEnabled(true);
-        }
-
-        if (Build.VERSION.SDK_INT >= 19) {
-            this.setLayerType(View.LAYER_TYPE_HARDWARE, null);
-        } else {
-            this.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
-        }
+        WebView.setWebContentsDebuggingEnabled(true);
+        this.setLayerType(View.LAYER_TYPE_HARDWARE, null);
 
         this.setWebViewClient(generateBridgeWebViewClient());
 
